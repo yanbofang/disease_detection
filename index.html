@@ -6,35 +6,33 @@
 <body>
 
 <video id="video" width="640" height="480" autoplay></video>
-<button id="snap" class="sexyButton">Snap Photo</button>
+<button id="snap">Snap Photo</button>
 <canvas id="canvas" width="640" height="480"></canvas>
 
 <script type="text/javascript">
-	
-		// Put event listeners into place
-		window.addEventListener("DOMContentLoaded", function() {
-			// Grab elements, create settings, etc.
-            var canvas = document.getElementById('canvas');
-            var context = canvas.getContext('2d');
-            var video = document.getElementById('video');
-            var mediaConfig =  { video: true };
-            var errBack = function(e) {
-            	console.log('An error has occurred!', e)
-            };
 
-			// Put video listeners into place
-            if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
-                    video.src = window.URL.createObjectURL(stream);
-                    video.play();
-                });
-            }
+// Grab elements, create settings, etc.
+var video = document.getElementById('video');
 
-			// Trigger photo take
-			document.getElementById('snap').addEventListener('click', function() {
-				context.drawImage(video, 0, 0, 640, 480);
-			});
-		}, false);
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    });
+}
+
+// Elements for taking the snapshot
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var video = document.getElementById('video');
+
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+    context.drawImage(video, 0, 0, 640, 480);
+});
+
 
 </script>
 </body>
