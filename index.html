@@ -199,16 +199,14 @@ $(document).on('click','.avatar',function(){
 	    }
 	});
 
-    /*
-	$.ajax({
+$.ajax({
 	    type: "GET",
-	    url: "",
-	     data: {image: dataURL},
+	    url: "http://localhost:31338/",
+	    data: {'num': index + 1},
 	    success: function (data) {
 	    	console.log(data)
 	    }
 	});
-	*/
 
 	incrementBar();
 	startTimer();
