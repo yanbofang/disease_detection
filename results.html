@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<!--
+	Visualize by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+		<title>Visualize by TEMPLATED</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css"></link>
+	<link href='http://fonts.googleapis.com/css?family=Overlock' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+	</head>
+	<style type="text/css">
+.takepic {
+	font-family: 'Raleway',sans-serif;
+	font-size: 5em;
+}
+video {
+	text-align: center;
+	object-fit: cover;
+	min-width: 80%;
+	min-height: 100%;
+}
+.blkback {
+	background-color: black;
+}
+#time {
+	
+
+	color: white;
+	padding-top: 70px;
+}
+.center {
+    relative: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+}
+.not-show {
+	z-index: -10;
+	position: absolute;
+	left: 0;
+	top: 50;
+}
+.ratio-text {
+	text-align: center;
+	color: white;
+	font-family: 'Poiret One',sans-serif;
+	font-size: 1.3em;
+}
+</style>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+
+						<h1>This is <strong>Visualize</strong>, a responsive site template designed by <a href="http://templated.co">TEMPLATED</a><br />
+						and released for free under the Creative Commons License.</h1>
+
+
+
+
+					</header>
+
+				<!-- Main -->
+					<section id="main">
+
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-2"><img src="images/20.png" alt="" /></div>
+							<div class="col-md-2"><img src="images/40.png" alt="" /></div>
+							<div class="col-md-2"><img src="images/60.png" alt="" /></div>
+							<div class="col-md-2"><img src="images/80.png" alt="" /></div>
+							<div class="col-md-2"><img src="images/100.png" alt="" /></div>
+						</div>
+						<div class="row">
+							<div class="col-md-2 ratio-text">1x</div>
+							<div class="col-md-2 ratio-text">1.05x</div>
+							<div class="col-md-2 ratio-text">1.10x</div>
+							<div class="col-md-2 ratio-text">1.20x</div>
+							<div class="col-md-2 ratio-text">1.30x</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<canvas id="lineChart" height="50" width="50" ></canvas>
+					</div>
+
+						<!-- Thumbnails -->
+							<section class="thumbnails">
+								<div>
+									<a href="images/fulls/01.jpg">
+										<img src="images/thumbs/01.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/02.jpg">
+										<img src="images/thumbs/02.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+								<div>
+									<a href="images/fulls/03.jpg">
+										<img src="images/thumbs/03.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/04.jpg">
+										<img src="images/thumbs/04.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/05.jpg">
+										<img src="images/thumbs/05.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+								<div>
+									<a href="images/fulls/06.jpg">
+										<img src="images/thumbs/06.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/07.jpg">
+										<img src="images/thumbs/07.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+							</section>
+
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p>&copy; Untitled. All rights reserved. Design: <a href="http://templated.co">TEMPLATED</a>. Demo Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+					</footer>
+
+			</div>
+
+			<script type="text/javascript">
+				var ctx = document.getElementById("lineChart");
+				ctx.width = 50;
+				ctx.height = 50;
+				var scatterChart = new Chart(ctx, {
+					type: 'line',
+					data : {
+						labels: ["0 min", "10 min", "20 min", "30 min", "40 min", "50 min", "60 min"],
+						datasets: [
+						{
+							label: "Change in pupil size over time",
+							fill: false,
+							lineTension: 0.1,
+							backgroundColor: "rgba(75,192,192,0.4)",
+							borderColor: "rgba(75,192,192,1)",
+							borderCapStyle: 'butt',
+							borderDash: [],
+							borderDashOffset: 0.0,
+							borderJoinStyle: 'miter',
+							pointBorderColor: "rgba(75,192,192,1)",
+							pointBackgroundColor: "#fff",
+							pointBorderWidth: 1,
+							pointHoverRadius: 20,
+							pointHoverBackgroundColor: "rgba(75,192,192,1)",
+							pointHoverBorderColor: "rgba(220,220,220,1)",
+							pointHoverBorderWidth: 2,
+							pointRadius: 10,
+							pointHitRadius: 10,
+							data: [100, 100, 109, 121, 128, 126, 125],
+							spanGaps: false,
+						}
+						]
+					},
+					options: {
+						scales:{
+							xAxes:[{
+								ticks: {
+				                    fontColor: "rgba(255,255,255,0.5)",
+				                    fontSize: 18
+				                }
+							}],
+							yAxes:[{
+								ticks: {
+				                    fontColor: "rgba(255,255,255,0.5)",
+				                    fontSize: 18
+				                }
+							}],
+						}
+					}
+				});
+				ctx.width = 300;
+				ctx.height = 300;
+			</script>>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script type="text/javascript"></script>
+	</body>
+</html>
