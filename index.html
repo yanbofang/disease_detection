@@ -24,12 +24,6 @@
 	font-family: 'Raleway',sans-serif;
 	font-size: 5em;
 }
-video {
-	text-align: center;
-	object-fit: cover;
-	min-width: 80%;
-	min-height: 100%;
-}
 .blkback {
 	background-color: black;
 }
@@ -64,8 +58,8 @@ video {
 
 						<div class="row">
 							<div class="col-md-3"><span id="time"></span></div>
-							<div class="col-md-6">
-								<video id="video" class="center" width="900" height="562.5" autoplay></video>
+								<div class="col-md-6">
+								<video id="video" class="center" width="600" height="375" autoplay></video>
 							</div>
 						</div>
 						<div class="row progress">
@@ -124,7 +118,7 @@ video {
 					<div class="row">
 							<div class="col-md-3"></div>
 							<div class="col-md-6">
-								<canvas id="canvas" width="640" height="480"></canvas>
+								<canvas id="canvas" width="600" height="375"></canvas>
 							</div>
 							<div class="col-md-3"></div>
 						</div>
@@ -141,29 +135,62 @@ video {
 			<script src="assets/js/jquery.poptrox.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="webgazer.js"></script>
 			<script type="text/javascript">
 
-// Grab elements, create settings, etc.
-var video = document.getElementById('video');
+window.onload = function() {
+    webgazer .setTracker('clmtrackr')
+        .setGazeListener(function(data, clock) {
+         //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+         //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+        })
+        .begin()
+        .showPredictionPoints(false); /* shows a square every 100 milliseconds where current prediction is */
 
-// Get access to the camera!
-if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    // Not adding `{ audio: true }` since we only want video now
-    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
-        video.src = window.URL.createObjectURL(stream);
-        video.play();
-    });
-}
+    var width = 600;
+    var height = 375;
+    var topDist = '0px';
+    var leftDist = (screen.width/2)-(width/2) + 'px';
+    
 
-// Elements for taking the snapshot
+    var setup = function() {
+        var video = document.getElementById('webgazerVideoFeed');
+        video.style.display = 'block';
+        video.style.position = 'absolute';
+        video.style.top = topDist;
+        video.style.left = leftDist;
+        video.width = width;
+        video.height = height;
+        video.style.margin = '0px';
+
+        webgazer.params.imgWidth = width;
+        webgazer.params.imgHeight = height;
+
+        var overlay = document.createElement('canvas');
+        overlay.id = 'overlay';
+        overlay.style.position = 'absolute';
+        overlay.width = width;
+        overlay.height = height;
+        overlay.style.top = topDist;
+        overlay.style.left = leftDist;
+        overlay.style.margin = '0px';
+
+        document.body.appendChild(overlay);
+
+        var cl = webgazer.getTracker().clm;
+
+        function drawLoop() {
+            requestAnimFrame(drawLoop);
+            overlay.getContext('2d').clearRect(0,0,width,height);
+            if (cl.getCurrentPosition()) {
+                cl.draw(overlay);
+            }
+        }
+        drawLoop();
+
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-var video = document.getElementById('video');
-
-var index = 0;
-var resetTime = true;
-
-// Trigger photo take
+        // Trigger photo take
 $(document).on('click','.avatar',function(){
    context.drawImage(video, 0, 0);
 
@@ -193,6 +220,22 @@ $(document).on('click','.avatar',function(){
 	incrementBar();
 	startTimer();
 });
+
+    };
+      function checkIfReady() {
+        if (webgazer.isReady()) {
+            setup();
+        } else {
+            setTimeout(checkIfReady, 100);
+        }
+    }
+    setTimeout(checkIfReady,100);
+};
+
+
+var index = 0;
+var resetTime = true;
+
 
 function incrementBar() {
 	if (index < 7)
