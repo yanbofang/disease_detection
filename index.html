@@ -1,8 +1,16 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Visualize by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
 <html>
-<head>
-	<title></title>
-	<!-- Latest compiled and minified CSS -->
+	<head>
+		<title>Visualize by TEMPLATED</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css"></link>
@@ -10,66 +18,139 @@
 	<link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
-</head>
-<style type="text/css">
-	body {
-		text-align: center;
-	}
-	.row {
-		padding-top: 30px;
-		padding-bottom: -30px;
-	}
-	body{
+	</head>
+	<style type="text/css">
+.takepic {
+	font-family: 'Raleway',sans-serif;
+	font-size: 5em;
+}
+video {
 	text-align: center;
-	background: #00ECB9;
-  font-family: sans-serif;
-  font-weight: 100;
+	object-fit: cover;
+	min-width: 80%;
+	min-height: 100%;
 }
-
-h1{
-  color: #396;
-  font-weight: 100;
-  font-size: 40px;
-  margin: 40px 0px 20px;
+.blkback {
+	background-color: black;
 }
-
-#clockdiv{
-	font-family: sans-serif;
-	color: #fff;
-	display: inline-block;
-	font-weight: 100;
-	text-align: center;
-	font-size: 30px;
+#time {
+	font-family: 'Poiret One',sans-serif;
+	font-size: 4em;
+	color: white;
+	padding-top: 70px;
 }
-
-#clockdiv > div{
-	padding: 10px;
-	border-radius: 3px;
-	background: #00BF96;
-	display: inline-block;
+.center {
+    relative: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
 }
-
-#clockdiv div > span{
-	padding: 15px;
-	border-radius: 3px;
-	background: #00816A;
-	display: inline-block;
-}
-
-.smalltext{
-	padding-top: 5px;
-	font-size: 16px;
+.not-show {
+	z-index: -10;
+	position: absolute;
+	left: 0;
+	top: 50;
 }
 </style>
+	<body>
 
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-<body>
+				<!-- Header -->
+					<header id="header">
+						<div class="container-fluid">
 
-<video id="video" width="640" height="480" autoplay></video>
-<button id="snap">Snap Photo</button>
-<canvas id="canvas" width="640" height="480"></canvas>
+						<div class="row">
+							<div class="col-md-3"><span id="time"></span></div>
+							<div class="col-md-6">
+								<video id="video" class="center" width="900" height="562.5" autoplay></video>
+							</div>
+						</div>
+						<div class="row progress">
+						  <div class="progress-bar progress-bar-striped" id="bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+						    <span id="percent">0</span>/7 photos
+						  </div>
+						</div>
 
-<script type="text/javascript">
+						</div>
+						<span class="avatar" id="snap"><img src="images/camera_button_3.png" alt="" /></span>
+
+						<h1>This is <strong>Visualize</strong>, a responsive site template designed by <a href="http://templated.co">TEMPLATED</a><br />
+						and released for free under the Creative Commons License.</h1>
+						<ul class="icons">
+							<li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li>
+							<li><a href="#" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
+						</ul>
+					</header>
+
+				<!-- Main -->
+					<section id="main">
+
+						<!-- Thumbnails -->
+							<section class="thumbnails">
+								<div>
+									<a href="images/fulls/01.jpg">
+										<img src="images/thumbs/01.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/02.jpg">
+										<img src="images/thumbs/02.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+								<div>
+									<a href="images/fulls/03.jpg">
+										<img src="images/thumbs/03.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/04.jpg">
+										<img src="images/thumbs/04.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/05.jpg">
+										<img src="images/thumbs/05.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+								<div>
+									<a href="images/fulls/06.jpg">
+										<img src="images/thumbs/06.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+									<a href="images/fulls/07.jpg">
+										<img src="images/thumbs/07.jpg" alt="" />
+										<h3>Lorem ipsum dolor sit amet</h3>
+									</a>
+								</div>
+							</section>
+
+					</section>
+					<div class="row">
+							<div class="col-md-3"></div>
+							<div class="col-md-6">
+								<canvas id="canvas" width="640" height="480"></canvas>
+							</div>
+							<div class="col-md-3"></div>
+						</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p>&copy; Untitled. All rights reserved. Design: <a href="http://templated.co">TEMPLATED</a>. Demo Images: <a href="http://unsplash.com">Unsplash</a>.</p>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script type="text/javascript">
 
 // Grab elements, create settings, etc.
 var video = document.getElementById('video');
@@ -84,18 +165,16 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 
 // Elements for taking the snapshot
-window.onload = function(){
-	var canvas = document.querySelector('#canvas');
-	var context = canvas.getContext('2d');
-	var video = document.querySelector('#video');
-	var enddate = date.getTime() + 5*60000
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var video = document.getElementById('video');
 
-	var starttim = false;
-}
+var index = 0;
+var resetTime = true;
 
 // Trigger photo take
-document.getElementById("snap").addEventListener("click", function() {
-    context.drawImage(video, 0, 0);
+$(document).on('click','.avatar',function(){
+   context.drawImage(video, 0, 0);
 
     var dataURL = canvas.toDataURL("image/png");
 	dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
@@ -108,47 +187,55 @@ document.getElementById("snap").addEventListener("click", function() {
 	    	console.log(data)
 	    }
 	});
-	enddate = date.getTime() + 5*60000
-	starttim = true;
-	//initializeClock('clockdiv', enddate);
+	incrementBar();
+	startTimer();
 });
 
+function incrementBar() {
+	if (index < 7)
+		index = index + 1;
+	var percent = index/7 * 100;
 
-function getTimeRemaining(endtime) {
-  var t = Date.parse(endtime) - Date.parse(new Date());
-  var seconds = Math.floor((t / 1000) % 60);
-  var minutes = Math.floor((t / 1000 / 60) % 60);
-  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-  var days = Math.floor(t / (1000 * 60 * 60 * 24));
-  return {
-    'total': t,
-    'days': days,
-    'hours': hours,
-    'minutes': minutes,
-    'seconds': seconds
-  };
+	var widthText = "width:".concat(percent);
+	widthText = widthText.concat("%;");
+
+	var bar = document.getElementById('bar');
+	bar.setAttribute("style", widthText);
+
+	var num = document.getElementById('percent');
+	num.innerHTML = index;
 }
 
-function initializeClock(id, endtime) {
-  var clock = document.getElementById(id);
-  var minutesSpan = clock.querySelector('.minutes');
-  var secondsSpan = clock.querySelector('.seconds');
+var interval;
+function countdown(duration, display) {
+    var timer = duration, minutes, seconds;
+    clearInterval(interval);
+    interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
-  function updateClock() {
-    var t = getTimeRemaining(endtime);
-    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    if (t.total <= 0) {
-      clearInterval(timeinterval);
-      return;
-    }
-  }
+        display.textContent = minutes + ":" + seconds;
 
-  updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
+        if (--timer < 0) {
+            clearInterval(interval);
+            display.textContent = "";
+            alert("Dear user, it's time to take another photo.");
+        }
+    }, 1000);
 }
+
+function startTimer () {
+    var fiveMinutes = 60*10,
+        display = document.querySelector('#time');
+    countdown(fiveMinutes, display);
+};
+
+
+
 
 </script>
-</body>
+	</body>
 </html>
