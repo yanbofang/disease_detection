@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-def find_pupil_area():
-    image = cv2.imread('eye.png')
+def find_pupil_diameter(img:str):
+    image = cv2.imread(img)
     grayscale = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     retval, thresholded = cv2.threshold(grayscale, 20, 255, cv2.THRESH_BINARY)
     plt.imsave("binary.png", thresholded)
@@ -34,9 +34,14 @@ def find_pupil_area():
         cv2.ellipse(drawing, box=ellipse, color=(255, 0, 0))
 
     plt.imsave("eye_contour.png", drawing)
-    print(image.size)
-    print(area)
     diameter = 2*(np.sqrt(area/np.pi))/8
     return diameter
 
-print(find_pupil_area())
+def find_eye_diameter(img:str):
+    eye = cv2.imread(img)
+    return eye.shape[1]
+
+def get_ratio(dia_pupil, length_eye):
+    return dia_pupil/length_eye
+
+print(find_pupil_diameter())
