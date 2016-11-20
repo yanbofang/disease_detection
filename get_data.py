@@ -16,13 +16,13 @@ def get_images(image:str, num:int):
     topLeftY2 = faceLandmarks['eyeRightTop']['y']
     bottomRightX2 = faceLandmarks['eyeRightOuter']['x']
     bottomRightY2 = faceLandmarks['eyeRightBottom']['y']
-    cropRight(topLeftX2, topLeftY2, bottomRightX2, bottomRightY2)
+    cropRight(topLeftX2, topLeftY2, bottomRightX2, bottomRightY2, num)
     #for left eye
     topLeftX1 = faceLandmarks['eyeLeftOuter']['x']
     topLeftY1 = faceLandmarks['eyeLeftTop']['y']
     bottomRightX1 = faceLandmarks['eyeLeftInner']['x']
     bottomRightY1 = faceLandmarks['eyeLeftBottom']['y']
-    cropLeft(topLeftX1, topLeftY1, bottomRightX1, bottomRightY1)
+    cropLeft(topLeftX1, topLeftY1, bottomRightX1, bottomRightY1, num)
 
 def cropLeft(topLeftX1, topLeftY1, bottomRightX1, bottomRightY1, num:int):
 	img = Image.open("face.png")

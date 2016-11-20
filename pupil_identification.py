@@ -2,9 +2,10 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import json
-import re
+import re, os
 import plotly.plotly as py
 import plotly.graph_objs as go
+from dataIO import fileIO
 from PIL import Image, ImageEnhance
 
 def find_pupil_diameter(img:str):
@@ -71,11 +72,11 @@ def get_ratio(dia_pupil, length_eye):
     return dia_pupil/length_eye
 
 # gives percent if passed in file in format eyeSide_num.png. also generates graph
-def percent_of_org(current_file, num:int):
-    is_Left = false
+def percent_of_org(current_file:str, num:int):
+    is_Left = False
     if 'Left' in str(current_file):
         start_file = "eyeLeft_1.png"
-        is_Left = true
+        is_Left = True
     else:
         start_file = "eyeRight_1.png"
 
@@ -84,39 +85,48 @@ def percent_of_org(current_file, num:int):
 
     per_of_org = (current / start) * 100
 
+    # check file existence
+    data_file = "data.json"
+    if not fileIO(data_file, "check"):
+        fileIO(data_file, "save", {})
     # write information to json
-    num = int(re.search(r'\d+', current_file).group())
-    with open('data.json') as data_file:    
-        data = json.load(data_file)
+    data = fileIO(data_file, "load")
 
-    if num == 1:
+    num = int(re.search(r'\d+', current_file).group())
+
+    if num == 1 and len(data[str(num)]) == 2:
         data = {}
 
-    data[str(num)] = {}
+    if str(num) not in data:
+        data[str(num)] = {}
+
+    if len(data[str(num)]) == 2:
+        data[str(num)] = {}
 
     if is_Left:
         data[str(num)]['left'] = per_of_org
     else:
         data[str(num)]['right'] = per_of_org
 
-    print(str(data))
+    fileIO('data.json', "save", data)
 
-    with open('data.json', 'w') as outfile:
-        json.dump(data, 'data.json')
-
-    generate_graph()
-
+    print("GEN GRAPH")
+    if len(data[str(num)]) % 2 == 0:
+        print("ACTUALLY GEN GRAPH")
+        generate_graph()
     return per_of_org
 
 def generate_graph():
     with open('data.json') as data_file:    
         data = json.load(data_file)
-
+    
+    py.sign_in('SteveX', 'y6pk18itui') # plotly credentials
+    
     x = []
     y1 = []
     y2 = []
     for num in data.keys():
-        x.append(num)
+        x.append(int(num))
         y1.append(data[num]['left'])
         y2.append(data[num]['right'])
 
