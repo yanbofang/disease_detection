@@ -155,6 +155,7 @@ video {
 
 			<script type="text/javascript">
 				var ctx = document.getElementById("lineChart");
+				var rand = Math.floor(Math.random() * 2)
 				var AD = new Chart(ctx, {
 					type: 'line',
 					data : {
@@ -179,7 +180,7 @@ video {
 							pointHoverBorderWidth: 2,
 							pointRadius: 10,
 							pointHitRadius: 10,
-							data: [100,100,100,100,101,102,102],
+							data: [100,100,100,100,100,100,100+rand],
 							spanGaps: false,
 						}
 						]
