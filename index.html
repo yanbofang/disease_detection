@@ -2,6 +2,14 @@
 <html>
 <head>
 	<title></title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css"></link>
+	<link href='http://fonts.googleapis.com/css?family=Overlock' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
 </head>
 <body>
 
@@ -30,7 +38,19 @@ var video = document.getElementById('video');
 
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function() {
-    context.drawImage(video, 0, 0, 640, 480);
+    context.drawImage(video, 0, 0);//, 640, 480);
+
+    var dataURL = canvas.toDataURL("image/png");
+	dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+    $.ajax({
+	    type: "POST",
+	    url: "http://minh.heliohost.org/detection_disease/save_image.php",
+	     data: {image: dataURL},
+	    success: function (data) {
+	    	console.log(data)
+	    }
+	});
 });
 
 
