@@ -59,6 +59,9 @@ video {
 	font-family: 'Poiret One',sans-serif;
 	font-size: 1.3em;
 }
+.padd {
+	padding-top: 100px;
+}
 </style>
 	<body>
 
@@ -80,7 +83,8 @@ video {
 					<section id="main">
 
 					<div class="container-fluid">
-						<div class="row">
+						<div class="row padd">
+							<div class="col-md-1"></div>
 							<div class="col-md-2"><img src="images/20.png" alt="" /></div>
 							<div class="col-md-2"><img src="images/40.png" alt="" /></div>
 							<div class="col-md-2"><img src="images/60.png" alt="" /></div>
@@ -88,6 +92,7 @@ video {
 							<div class="col-md-2"><img src="images/100.png" alt="" /></div>
 						</div>
 						<div class="row">
+							<div class="col-md-1"></div>
 							<div class="col-md-2 ratio-text">1x</div>
 							<div class="col-md-2 ratio-text">1.05x</div>
 							<div class="col-md-2 ratio-text">1.10x</div>
@@ -96,7 +101,7 @@ video {
 						</div>
 					</div>
 
-					<div class="row">
+					<div class="row padd">
 						<canvas id="lineChart" height="50" width="50" ></canvas>
 					</div>
 
@@ -149,9 +154,7 @@ video {
 
 			<script type="text/javascript">
 				var ctx = document.getElementById("lineChart");
-				ctx.width = 50;
-				ctx.height = 50;
-				var scatterChart = new Chart(ctx, {
+				var AD = new Chart(ctx, {
 					type: 'line',
 					data : {
 						labels: ["0 min", "10 min", "20 min", "30 min", "40 min", "50 min", "60 min"],
@@ -197,8 +200,6 @@ video {
 						}
 					}
 				});
-				ctx.width = 300;
-				ctx.height = 300;
 			</script>>
 
 		<!-- Scripts -->
