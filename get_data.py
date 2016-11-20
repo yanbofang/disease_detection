@@ -9,7 +9,8 @@ CF.Key.set(KEY)
 
 def get_data():
     faceData = []
-    image = "http://i.imgur.com/4boKR9E.png"
+    image = "http://minh.heliohost.org/detection_disease/uploads/face.png"
+    #image = "http://i.imgur.com/Ivro8k9.png"
     grabImg(image)
     faceData = CF.face.detect(image, face_id = False, landmarks = True)[0]
     faceLandmarks = faceData['faceLandmarks']
