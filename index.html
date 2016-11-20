@@ -11,11 +11,90 @@
   <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
 </head>
+<style type="text/css">
+	body{
+	text-align: center;
+	background: #A8DBA8;
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+.takepic {
+	font-family: 'Raleway',sans-serif;
+	font-size: 5em;
+}
+
+h1{
+  color: #396;
+  font-weight: 100;
+  font-size: 40px;
+  margin: 40px 0px 20px;
+}
+
+#clockdiv{
+	font-family: sans-serif;
+	color: #fff;
+	display: inline-block;
+	font-weight: 100;
+	text-align: center;
+	font-size: 30px;
+}
+
+#clockdiv > div{
+	padding: 10px;
+	border-radius: 3px;
+	background: #00BF96;
+	display: inline-block;
+}
+
+#clockdiv div > span{
+	padding: 15px;
+	border-radius: 3px;
+	background: #00816A;
+	display: inline-block;
+}
+
+.smalltext{
+	padding-top: 5px;
+	font-size: 16px;
+}
+video {
+	object-fit: cover;
+	min-width: 50%;
+	min-height: 100%;
+}
+.blkback {
+	background-color: black;
+}
+</style>
 <body>
 
-<video id="video" width="640" height="480" autoplay></video>
-<button id="snap">Snap Photo</button>
-<canvas id="canvas" width="640" height="480"></canvas>
+<div class="container-fluid">
+
+<div class="row blkback">
+	<video id="video" autoplay></video>
+</div>
+<div class="row progress">
+  <div class="progress-bar" id="bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+    <span id="percent">0</span>/7 photos
+  </div>
+</div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		 <button type="button" id="snap" class="btn btn-primary btn-lg takepic">Take Photo</button>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+<div class="row">
+	<div class="col-md-3"></div>
+	<div class="col-md-6">
+		<canvas id="canvas" width="640" height="480"></canvas>
+	</div>
+	<div class="col-md-3"></div>
+</div>
+
+</div>
 
 <script type="text/javascript">
 
@@ -36,9 +115,12 @@ var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 var video = document.getElementById('video');
 
+var index = 0;
+var date = new Date();
+
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function() {
-    context.drawImage(video, 0, 0);//, 640, 480);
+    context.drawImage(video, 0, 0);
 
     var dataURL = canvas.toDataURL("image/png");
 	dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
@@ -51,7 +133,25 @@ document.getElementById("snap").addEventListener("click", function() {
 	    	console.log(data)
 	    }
 	});
+	var enddate = date.getTime() + 5*60000
+	incrementBar();
 });
+
+function incrementBar() {
+	index = index + 1;
+	var percent = index/7 * 100;
+
+	var widthText = "width:".concat(percent);
+	widthText = widthText.concat("%;");
+
+	var bar = document.getElementById('bar');
+	bar.setAttribute("style", widthText);
+
+	var num = document.getElementById('percent');
+	num.innerHTML = index;
+}
+
+
 
 
 </script>
