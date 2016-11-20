@@ -41,6 +41,12 @@
 	left: 0;
 	top: 50;
 }
+h1 {
+	font-family: 'Raleway',sans-serif;
+	font-size: 2em;
+	color: white;
+	padding-top: 70px;
+}
 </style>
 	<body>
 
@@ -50,7 +56,7 @@
 				<!-- Header -->
 					<header id="header">
 						<div class="container-fluid">
-
+							<h1>Alzheimer's disease detection</h1>
 						<div class="row">
 							<div class="col-md-3"><span id="time"></span></div>
 								<div class="col-md-6">
@@ -78,35 +84,6 @@
 				<!-- Main -->
 					<section id="main">
 
-						<!-- Thumbnails -->
-							<section class="thumbnails">
-								<div>
-									<a href="images/fulls/01.jpg">
-										<img src="images/thumbs/01.jpg" alt="" />
-										<h3>Lorem ipsum dolor sit amet</h3>
-									</a>
-									<a href="images/fulls/02.jpg">
-										<img src="images/thumbs/02.jpg" alt="" />
-										<h3>Lorem ipsum dolor sit amet</h3>
-									</a>
-								</div>
-								<div>
-									<a href="images/fulls/03.jpg">
-										<img src="images/thumbs/03.jpg" alt="" />
-										<h3>Lorem ipsum dolor sit amet</h3>
-									</a>
-									<a href="images/fulls/04.jpg">
-										<img src="images/thumbs/04.jpg" alt="" />
-										<h3>Lorem ipsum dolor sit amet</h3>
-									</a>
-									<a href="images/fulls/05.jpg">
-										<img src="images/thumbs/05.jpg" alt="" />
-										<h3>Lorem ipsum dolor sit amet</h3>
-									</a>
-								</div>
-								
-							</section>
-
 					</section>
 					<div class="row">
 							<div class="col-md-3"></div>
@@ -130,7 +107,6 @@
 			<script src="assets/js/main.js"></script>
 			<script src="webgazer.js"></script>
 			<script type="text/javascript">
-
 window.onload = function() {
     webgazer .setTracker('clmtrackr')
         .setGazeListener(function(data, clock) {
@@ -139,13 +115,11 @@ window.onload = function() {
         })
         .begin()
         .showPredictionPoints(false); /* shows a square every 100 milliseconds where current prediction is */
-
     var width = 600;
     var height = 375;
     var topDist = '80px';
     var leftDist = (screen.width/2)-(width/2) + 'px';
     
-
     var setup = function() {
         var video = document.getElementById('webgazerVideoFeed');
         video.style.display = 'block';
@@ -155,10 +129,8 @@ window.onload = function() {
         video.width = width;
         video.height = height;
         video.style.margin = '0px';
-
         webgazer.params.imgWidth = width;
         webgazer.params.imgHeight = height;
-
         var overlay = document.createElement('canvas');
         overlay.id = 'overlay';
         overlay.style.position = 'absolute';
@@ -167,11 +139,8 @@ window.onload = function() {
         overlay.style.top = topDist;
         overlay.style.left = leftDist;
         overlay.style.margin = '0px';
-
         document.body.appendChild(overlay);
-
         var cl = webgazer.getTracker().clm;
-
         function drawLoop() {
             requestAnimFrame(drawLoop);
             overlay.getContext('2d').clearRect(0,0,width,height);
@@ -180,16 +149,13 @@ window.onload = function() {
             }
         }
         drawLoop();
-
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
         // Trigger photo take
 $(document).on('click','.avatar',function(){
    context.drawImage(video, 0, 0);
-
     var dataURL = canvas.toDataURL("image/png");
 	dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-
     $.ajax({
 	    type: "POST",
 	    url: "http://minh.heliohost.org/detection_disease/save_image.php",
@@ -198,7 +164,6 @@ $(document).on('click','.avatar',function(){
 	    	console.log(data)
 	    }
 	});
-
 $.ajax({
 	    type: "GET",
 	    url: "http://localhost:31338/",
@@ -207,11 +172,9 @@ $.ajax({
 	    	console.log(data)
 	    }
 	});
-
 	incrementBar();
 	startTimer();
 });
-
     };
       function checkIfReady() {
         if (webgazer.isReady()) {
@@ -222,27 +185,21 @@ $.ajax({
     }
     setTimeout(checkIfReady,100);
 };
-
-
 var index = 0;
 var resetTime = true;
-
-
 function incrementBar() {
 	if (index < 7)
 		index = index + 1;
 	var percent = index/7 * 100;
-
 	var widthText = "width:".concat(percent);
 	widthText = widthText.concat("%;");
-
 	var bar = document.getElementById('bar');
 	bar.setAttribute("style", widthText);
-
 	var num = document.getElementById('percent');
 	num.innerHTML = index;
+	if (index >= 7)
+		window.location = "results.html";
 }
-
 var interval;
 function countdown(duration, display) {
     var timer = duration, minutes, seconds;
@@ -250,12 +207,9 @@ function countdown(duration, display) {
     interval = setInterval(function () {
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
-
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
-
         display.textContent = minutes + ":" + seconds;
-
         if (--timer < 0) {
             clearInterval(interval);
             display.textContent = "";
@@ -263,16 +217,11 @@ function countdown(duration, display) {
         }
     }, 1000);
 }
-
 function startTimer () {
     var fiveMinutes = 60*10,
         display = document.querySelector('#time');
     countdown(fiveMinutes, display);
 };
-
-
-
-
 </script>
 	</body>
 </html>

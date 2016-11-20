@@ -9,8 +9,10 @@ CF.Key.set(KEY)
 def get_images(image:str, num:int):
     faceData = []
     grabImg(image)
+
     faceData = CF.face.detect(image, face_id = False, landmarks = True)[0]
     faceLandmarks = faceData['faceLandmarks']
+
     #for right eye
     topLeftX2 = faceLandmarks['eyeRightInner']['x']
     topLeftY2 = faceLandmarks['eyeRightTop']['y']
@@ -35,4 +37,6 @@ def cropRight(topLeftX2, topLeftY2, bottomRightX2, bottomRightY2, num:int):
 	imgRight.save('eyeRight_{}.png'.format(num))
 
 def grabImg(url):
-	urllib.request.urlretrieve(url, "face.png")
+    urllib.request.urlretrieve(url, "face.png")
+
+    # get_images("http://i.imgur.com/Yc7XKtS.png", 1)

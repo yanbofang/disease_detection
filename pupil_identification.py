@@ -13,13 +13,12 @@ def find_pupil_diameter(img:str):
     image = Image.open(img)
     contrast = ImageEnhance.Contrast(image)
     new_image = contrast.enhance(1.2)
-    new_image.save("contrast_image.png")
+    new_image.save('contrast_image.png')
 
     # opencv processing
     image = cv2.imread("contrast_image.png")
     grayscale = np.copy(image)
-    grayscale = cv2.cvtColor(grayscale, cv2.COLOR_RGB2GRAY)
-    plt.imsave("image_test.png", image)    
+    grayscale = cv2.cvtColor(grayscale, cv2.COLOR_RGB2GRAY)  
     ret, thresh = cv2.threshold(grayscale, 30, 255, cv2.THRESH_BINARY)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
     # get rid of boundaries
@@ -127,7 +126,7 @@ def generate_graph():
     x = []
     y1 = []
     y2 = []
-    for num in data.keys():
+    for num in sorted(data.keys()):
         x.append(int(num))
         y1.append(data[num]['left'])
         y2.append(data[num]['right'])
@@ -152,3 +151,4 @@ def generate_graph():
     data = [trace0, trace1]
     fig = go.Figure(data=data, layout=layout)
     py.image.save_as(fig, filename='graph.png')
+
