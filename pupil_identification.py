@@ -25,14 +25,16 @@ def find_pupil_diameter(img:str):
     drawing = np.copy(image)
     plt.imsave("eye_contour_original.png", drawing)
     cv2.drawContours(drawing, contours, -1, (255, 0, 0), 1)
-    print(len(contours))
+    # print(len(contours))
+
     total_area = 0
+    diameter = 0
+    largest = (0, 0, 0) # find largest reasonable ellipse (area, Ma, ma)
     for contour in contours:
         area=cv2.contourArea(contour)
         bounding_box = cv2.boundingRect(contour)
         extend = area / (bounding_box[2] * bounding_box[3])
-        
-        print("Area: {}".format(area))
+
         # get rid of contours with big extend
         if extend > 0.9:
             continue
@@ -44,32 +46,37 @@ def find_pupil_diameter(img:str):
             cv2.circle(drawing, center, 3, (0, 255, 0), -1)
         
         # fit an ellipse around contours, find diameter, and draw on pupil
-        diameter = 0
         ellipse = cv2.fitEllipse(contour)
         if ellipse != None:
             (x, y), (MA, ma), angle = ellipse
             ellipse_area = np.pi * MA * ma
-            print("Area Ellipse: {} | Major: {} | Minor: {}".format(ellipse_area, MA, ma))
-            diameter = MA
-            cv2.ellipse(drawing, box=ellipse, color=(255, 100, 255))
+            if MA < image.shape[1] * .75 and MA > largest[1]:
+                largest = (ellipse_area, MA, ma)
+                diameter = MA
+                cv2.ellipse(drawing, box=ellipse, color=(255, 100, 255))
 
     plt.imsave("eye_contour.png", drawing)
+    print("Area Ellipse: {} | Major: {} | Minor: {}".format(ellipse_area, MA, ma))
     print("Diameter: {}".format(diameter))
     return diameter
 
 def find_eye_length(img:str):
     eye = cv2.imread(img)
+    print("Length: {}".format(eye.shape[1]))
     return eye.shape[1]
 
 def get_ratio(dia_pupil, length_eye):
     return dia_pupil/length_eye
 
-rightEye_file = "right_2.png"
-leftEye_file = "left_2.png"
-rightEye_dia = "imgRight_dia.png"
-other_file = "eye.png"
+def percent_change(before_file, after_file):
+    before = find_pupil_diameter(before_file)/find_eye_length(before_file)
+    after = find_pupil_diameter(after_file)/find_eye_length(after_file)
+    print("Before: {} | After: {}".format(before, after))
+    per_change = ((after - before)/ before) * 100
+    return per_change
 
-diameter = find_pupil_diameter(rightEye_file)
-eye_length = find_eye_length(rightEye_file)
-ratio = get_ratio(diameter, eye_length)
-print(ratio)
+#before = "eye.png"
+#after = "eye_dia.png"
+#before = "left_2.png"
+#after = "left_2_dia.png"
+#print("Percent Change: {}".format(percent_change(before, after)))
