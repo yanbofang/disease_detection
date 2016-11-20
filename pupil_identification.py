@@ -1,6 +1,10 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import json
+import re
+import plotly.plotly as py
+import plotly.graph_objs as go
 from PIL import Image, ImageEnhance
 
 def find_pupil_diameter(img:str):
@@ -16,14 +20,12 @@ def find_pupil_diameter(img:str):
     grayscale = cv2.cvtColor(grayscale, cv2.COLOR_RGB2GRAY)
     plt.imsave("image_test.png", image)    
     ret, thresh = cv2.threshold(grayscale, 30, 255, cv2.THRESH_BINARY)
-    plt.imsave("binary.png", thresh)
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5))
     # get rid of boundaries
     closed = cv2.erode(cv2.dilate(thresh, kernel, iterations=1), kernel, iterations=1)
     contours, hierarchy = cv2.findContours(closed, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)[1:]
 
     drawing = np.copy(image)
-    plt.imsave("eye_contour_original.png", drawing)
     cv2.drawContours(drawing, contours, -1, (255, 0, 0), 1)
     # print(len(contours))
 
@@ -68,15 +70,73 @@ def find_eye_length(img:str):
 def get_ratio(dia_pupil, length_eye):
     return dia_pupil/length_eye
 
-def percent_change(before_file, after_file):
-    before = find_pupil_diameter(before_file)/find_eye_length(before_file)
-    after = find_pupil_diameter(after_file)/find_eye_length(after_file)
-    print("Before: {} | After: {}".format(before, after))
-    per_change = ((after - before)/ before) * 100
-    return per_change
+# gives percent if passed in file in format eyeSide_num.png. also generates graph
+def percent_of_org(current_file, num:int):
+    is_Left = false
+    if 'Left' in str(current_file):
+        start_file = "eyeLeft_1.png"
+        is_Left = true
+    else:
+        start_file = "eyeRight_1.png"
 
-#before = "eye.png"
-#after = "eye_dia.png"
-#before = "left_2.png"
-#after = "left_2_dia.png"
-#print("Percent Change: {}".format(percent_change(before, after)))
+    start = find_pupil_diameter(start_file)/find_eye_length(start_file)
+    current = find_pupil_diameter(current_file)/find_eye_length(current_file)
+
+    per_of_org = (current / start) * 100
+
+    # write information to json
+    num = int(re.search(r'\d+', current_file).group())
+    with open('data.json') as data_file:    
+        data = json.load(data_file)
+
+    if num == 1:
+        data = {}
+
+    data[str(num)] = {}
+
+    if is_Left:
+        data[str(num)]['left'] = per_of_org
+    else:
+        data[str(num)]['right'] = per_of_org
+
+    print(str(data))
+
+    with open('data.json', 'w') as outfile:
+        json.dump(data, 'data.json')
+
+    generate_graph()
+
+    return per_of_org
+
+def generate_graph():
+    with open('data.json') as data_file:    
+        data = json.load(data_file)
+
+    x = []
+    y1 = []
+    y2 = []
+    for num in data.keys():
+        x.append(num)
+        y1.append(data[num]['left'])
+        y2.append(data[num]['right'])
+
+    # Create a trace
+    trace0 = go.Scatter(
+        x = x,
+        y = y1,
+        mode = 'lines+markers',
+        name = 'Left Eye'
+    )
+    trace1 = go.Scatter(
+        x = x,
+        y = y2,
+        mode = 'lines+markers',
+        name = 'Right Eye'
+    )
+    layout = go.Layout(
+        title='Change in Pupil'
+    )
+
+    data = [trace0, trace1]
+    fig = go.Figure(data=data, layout=layout)
+    py.image.save_as(fig, filename='graph.png')

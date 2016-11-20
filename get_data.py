@@ -3,14 +3,11 @@ import scipy
 from PIL import Image
 import urllib.request
 
-
 KEY = '88b67a0d6300415e833a263093137907' # subscription key
 CF.Key.set(KEY)
 
-def get_data():
+def get_images(image:str, num:int):
     faceData = []
-    image = "http://minh.heliohost.org/detection_disease/uploads/face.png"
-    #image = "http://i.imgur.com/Ivro8k9.png"
     grabImg(image)
     faceData = CF.face.detect(image, face_id = False, landmarks = True)[0]
     faceLandmarks = faceData['faceLandmarks']
@@ -27,17 +24,15 @@ def get_data():
     bottomRightY1 = faceLandmarks['eyeLeftBottom']['y']
     cropLeft(topLeftX1, topLeftY1, bottomRightX1, bottomRightY1)
 
-def cropLeft(topLeftX1, topLeftY1, bottomRightX1, bottomRightY1):
+def cropLeft(topLeftX1, topLeftY1, bottomRightX1, bottomRightY1, num:int):
 	img = Image.open("face.png")
 	imgLeft = img.crop((topLeftX1, topLeftY1, bottomRightX1, bottomRightY1))
-	imgLeft.save('imgLeft.png')
+	imgLeft.save('eyeLeft_{}.png'.format(num))
 
-def cropRight(topLeftX2, topLeftY2, bottomRightX2, bottomRightY2):
+def cropRight(topLeftX2, topLeftY2, bottomRightX2, bottomRightY2. num:int):
 	img = Image.open("face.png")
 	imgRight = img.crop((topLeftX2, topLeftY2, bottomRightX2, bottomRightY2))
-	imgRight.save('imgRight.png')
+	imgRight.save('eyeRight_{}.png'.format(num))
 
 def grabImg(url):
 	urllib.request.urlretrieve(url, "face.png")
-
-get_data()
