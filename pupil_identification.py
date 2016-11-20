@@ -50,6 +50,7 @@ def find_pupil_diameter(img:str):
         
         # fit an ellipse around contours, find diameter, and draw on pupil
         ellipse = cv2.fitEllipse(contour)
+        ellipse_area = area
         if ellipse != None:
             (x, y), (MA, ma), angle = ellipse
             ellipse_area = np.pi * MA * ma
@@ -58,6 +59,7 @@ def find_pupil_diameter(img:str):
                 diameter = MA
                 cv2.ellipse(drawing, box=ellipse, color=(255, 100, 255))
 
+    print(ellipse_area)
     plt.imsave("eye_contour.png", drawing)
     print("Area Ellipse: {} | Major: {} | Minor: {}".format(ellipse_area, MA, ma))
     print("Diameter: {}".format(diameter))
