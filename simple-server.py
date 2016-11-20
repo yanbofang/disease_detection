@@ -54,10 +54,10 @@ class testHTTPServer_RequestHandler(BaseHTTPRequestHandler):
             ret['graph'] = f.read()
             f.close()
 
-            self.wfile.write(str(ret))
+            self.wfile.write(ret.encode())
         except:
             print("ERROR")
-            self.wfile.write(str(ret))
+            self.wfile.write(ret.encode())
         
         return 
 

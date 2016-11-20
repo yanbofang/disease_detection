@@ -29,7 +29,7 @@ def cropLeft(topLeftX1, topLeftY1, bottomRightX1, bottomRightY1, num:int):
 	imgLeft = img.crop((topLeftX1, topLeftY1, bottomRightX1, bottomRightY1))
 	imgLeft.save('eyeLeft_{}.png'.format(num))
 
-def cropRight(topLeftX2, topLeftY2, bottomRightX2, bottomRightY2. num:int):
+def cropRight(topLeftX2, topLeftY2, bottomRightX2, bottomRightY2, num:int):
 	img = Image.open("face.png")
 	imgRight = img.crop((topLeftX2, topLeftY2, bottomRightX2, bottomRightY2))
 	imgRight.save('eyeRight_{}.png'.format(num))
