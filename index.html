@@ -12,16 +12,18 @@
   <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
 </head>
 <style type="text/css">
+	body {
+		text-align: center;
+	}
+	.row {
+		padding-top: 30px;
+		padding-bottom: -30px;
+	}
 	body{
 	text-align: center;
-	background: #A8DBA8;
+	background: #00ECB9;
   font-family: sans-serif;
   font-weight: 100;
-}
-
-.takepic {
-	font-family: 'Raleway',sans-serif;
-	font-size: 5em;
 }
 
 h1{
@@ -58,43 +60,14 @@ h1{
 	padding-top: 5px;
 	font-size: 16px;
 }
-video {
-	object-fit: cover;
-	min-width: 50%;
-	min-height: 100%;
-}
-.blkback {
-	background-color: black;
-}
 </style>
+
+
 <body>
 
-<div class="container-fluid">
-
-<div class="row blkback">
-	<video id="video" autoplay></video>
-</div>
-<div class="row progress">
-  <div class="progress-bar" id="bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-    <span id="percent">0</span>/7 photos
-  </div>
-</div>
-<div class="row">
-	<div class="col-md-3"></div>
-	<div class="col-md-6">
-		 <button type="button" id="snap" class="btn btn-primary btn-lg takepic">Take Photo</button>
-	</div>
-	<div class="col-md-3"></div>
-</div>
-<div class="row">
-	<div class="col-md-3"></div>
-	<div class="col-md-6">
-		<canvas id="canvas" width="640" height="480"></canvas>
-	</div>
-	<div class="col-md-3"></div>
-</div>
-
-</div>
+<video id="video" width="640" height="480" autoplay></video>
+<button id="snap">Snap Photo</button>
+<canvas id="canvas" width="640" height="480"></canvas>
 
 <script type="text/javascript">
 
@@ -111,12 +84,14 @@ if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 }
 
 // Elements for taking the snapshot
-var canvas = document.getElementById('canvas');
-var context = canvas.getContext('2d');
-var video = document.getElementById('video');
+window.onload = function(){
+	var canvas = document.querySelector('#canvas');
+	var context = canvas.getContext('2d');
+	var video = document.querySelector('#video');
+	var enddate = date.getTime() + 5*60000
 
-var index = 0;
-var date = new Date();
+	var starttim = false;
+}
 
 // Trigger photo take
 document.getElementById("snap").addEventListener("click", function() {
@@ -133,26 +108,46 @@ document.getElementById("snap").addEventListener("click", function() {
 	    	console.log(data)
 	    }
 	});
-	var enddate = date.getTime() + 5*60000
-	incrementBar();
+	enddate = date.getTime() + 5*60000
+	starttim = true;
+	//initializeClock('clockdiv', enddate);
 });
 
-function incrementBar() {
-	index = index + 1;
-	var percent = index/7 * 100;
 
-	var widthText = "width:".concat(percent);
-	widthText = widthText.concat("%;");
-
-	var bar = document.getElementById('bar');
-	bar.setAttribute("style", widthText);
-
-	var num = document.getElementById('percent');
-	num.innerHTML = index;
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  var days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    'total': t,
+    'days': days,
+    'hours': hours,
+    'minutes': minutes,
+    'seconds': seconds
+  };
 }
 
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
 
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+      return;
+    }
+  }
+
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
+}
 
 </script>
 </body>
